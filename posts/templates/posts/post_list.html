@@ -1,0 +1,37 @@
+{% extends 'posts/base.html' %}
+
+{% block title %}Список постов{% endblock %}
+
+{% block content %}
+    <h1>Список постов</h1>
+    <div>
+        {% for post in posts %}
+            <div class="post">
+                
+                <a href="{% url 'post_detail' post.pk %}"><h2>{{ post.title }}</h2></a>
+
+                <p>{{ post.body }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ posts.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ posts.number }} из {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">следующая</a>
+            <a href="?page={{ posts.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
+
